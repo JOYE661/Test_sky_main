@@ -68,3 +68,9 @@ sky:
     user-secret-key: itcast
     user-ttl: 7200000
     user-token-name: authentication
+
+  file:
+    storage-type: local
+    local:
+      upload-path: /tmp/sky-media
+      access-url-prefix: http://localhost/media/

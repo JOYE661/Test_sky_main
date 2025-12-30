@@ -3,6 +3,7 @@ package com.sky.controller.admin;
 import java.io.IOException;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +17,12 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/admin/common")
 @Slf4j
 public class CommonController {
+
+    @Value("${sky.file.local.upload-path}")
+    private String uploadPath;
+
+    @Value("${sky.file.local.access-url-prefix}")
+    private String accessUrlPrefix;
 
     /**
      * 上传图片
@@ -32,9 +39,20 @@ public class CommonController {
             suffix = originalFilename.substring(originalFilename.lastIndexOf("."));
         }
         String fileName = UUID.randomUUID().toString() + suffix;
-        String imgUrl = "http://localhost/media/" + fileName;
+        
+        // 确保上传目录存在
+        java.io.File uploadDir = new java.io.File(uploadPath);
+        if (!uploadDir.exists()) {
+            uploadDir.mkdirs();
+        }
+        
+        // 构建完整的文件路径
+        java.io.File destFile = new java.io.File(uploadPath + java.io.File.separator + fileName);
+        String imgUrl = accessUrlPrefix + (accessUrlPrefix.endsWith("/") ? "" : "/") + fileName;
+        
         try {
-            file.transferTo(new java.io.File("D:\\Variable\\nginx-1.24.0\\media\\" + fileName));
+            file.transferTo(destFile);
+            log.info("图片上传成功，保存到：{}，访问地址：{}", destFile.getAbsolutePath(), imgUrl);
             return Result.success(imgUrl);
         } catch (IllegalStateException | IOException e) {
             log.error("上传图片失败：{}", e);
