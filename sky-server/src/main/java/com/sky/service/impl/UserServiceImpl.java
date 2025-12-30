@@ -38,6 +38,21 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public User wxLogin(UserLoginDTO userLoginDTO) {
+        // 开发环境后门：使用测试code直接登录
+        if ("test_login_code".equals(userLoginDTO.getCode())) {
+            // 使用固定的测试openid
+            String testOpenid = "test_openid";
+            User testUser = userMapper.getByOpenid(testOpenid);
+            if (testUser == null) {
+                testUser = User.builder()
+                        .openid(testOpenid)
+                        .createTime(LocalDateTime.now())
+                        .build();
+                userMapper.insert(testUser);
+            }
+            return testUser;
+        }
+
         // 调用微信用户接口，获取openid
         Map<String, String> reqParams = new HashMap<>();
         reqParams.put("appid", weChatProperties.getAppid());
