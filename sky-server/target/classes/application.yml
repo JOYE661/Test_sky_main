@@ -10,9 +10,13 @@ spring:
     allow-circular-references: true
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver # 驱动名称
-    url: jdbc:mysql://localhost:3306/test_sky
-    username: test_sky
+#    url: jdbc:mysql://localhost:3306/test_sky
+#    username: test_sky
+#    password: 64646464
+    url: jdbc:mysql://localhost:3306/Test_sky
+    username: root
     password: 64646464
+
     type: com.alibaba.druid.pool.DruidDataSource
   data:
     redis:
@@ -72,5 +76,7 @@ sky:
   file:
     storage-type: local
     local:
-      upload-path: /www/wwwroot/sky-take-out/media/
-      access-url-prefix: http://sky.somago.top/media/
+#      upload-path: /www/wwwroot/sky-take-out/media/
+#      access-url-prefix: http://sky.somago.top/media/
+      upload-path: /tmp/sky-media
+      access-url-prefix: http://localhost/media/
