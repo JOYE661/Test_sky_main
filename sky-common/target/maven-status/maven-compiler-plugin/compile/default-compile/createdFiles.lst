@@ -10,7 +10,6 @@ com/sky/constant/StatusConstant.class
 com/sky/exception/AccountNotFoundException.class
 com/sky/json/JacksonObjectMapper.class
 com/sky/exception/AccountLockedException.class
-META-INF/spring-configuration-metadata.json
 com/sky/exception/DeletionNotAllowedException.class
 com/sky/constant/MessageConstant.class
 com/sky/exception/UserNotLoginException.class
