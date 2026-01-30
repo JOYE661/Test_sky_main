@@ -5,7 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.sky.constant.MessageConstant;
 import com.sky.constant.PasswordConstant;
 import com.sky.constant.StatusConstant;
-// import com.sky.context.BaseContext;
+ import com.sky.context.BaseContext;
 import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
 import com.sky.dto.EmployeePageQueryDTO;
@@ -16,8 +16,7 @@ import com.sky.exception.PasswordErrorException;
 import com.sky.mapper.EmployeeMapper;
 import com.sky.result.PageResult;
 import com.sky.service.EmployeeService;
-
-// import java.time.LocalDateTime;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -75,18 +74,20 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void save(EmployeeDTO employeeDTO) {
         Employee employee = new Employee();
-        // 对象属性拷贝
-        BeanUtils.copyProperties(employeeDTO, employee);
+        // 对象属性拷贝DTO到员工对象Employee
+        BeanUtils.copyProperties(employeeDTO, employee); //employee.setName(employeeDTO.getName());
         // 设置账号状态
         employee.setStatus(StatusConstant.ENABLE);
         // 设置密码 默认密码为123456
         employee.setPassword(DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes()));
+
+        // TODO: 后期完善获取当前用户ID
         // 设置更新时间和创建时间
-        // employee.setCreateTime(LocalDateTime.now());
-        // employee.setUpdateTime(LocalDateTime.now());
+         employee.setCreateTime(LocalDateTime.now());
+         employee.setUpdateTime(LocalDateTime.now());
         // 记录当家创建人和更新人 id
-        // employee.setCreateUser(BaseContext.getCurrentId());
-        // employee.setUpdateUser(BaseContext.getCurrentId());
+         employee.setCreateUser(BaseContext.getCurrentId());
+         employee.setUpdateUser(BaseContext.getCurrentId());
 
         // 保存到数据库
         employeeMapper.insert(employee);
@@ -95,12 +96,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public PageResult<Employee> pageQuery(EmployeePageQueryDTO employeePageQueryDTO) {
         // 1、设置分页参数
+        // 基于mybatis插件实现简单分页(select * from employee limit 0,10)
         PageHelper.startPage(employeePageQueryDTO.getPage(), employeePageQueryDTO.getPageSize());
         // 2、查询数据
+        // page 是插件提供的，用于获取分页结果
         Page<Employee> page = employeeMapper.pageQuery(employeePageQueryDTO);
         // 3、封装结果
+        // 获取总条数
         long total = page.getTotal();
+        // 获取当前页数据
         List<Employee> records = page.getResult();
+        // pageResult有参数构造方法
         return new PageResult<>(total, records);
     }
 

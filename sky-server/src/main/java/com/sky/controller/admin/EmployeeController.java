@@ -1,5 +1,6 @@
 package com.sky.controller.admin;
 
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.sky.constant.JwtClaimsConstant;
 import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
@@ -59,14 +60,14 @@ public class EmployeeController {
 
         Employee employee = employeeService.login(employeeLoginDTO);
 
-        // 登录成功后，生成jwt令牌
+        // 登录成功后，生成jwt令牌，用于员工后续操作的权限认证
         Map<String, Object> claims = new HashMap<>();
         claims.put(JwtClaimsConstant.EMP_ID, employee.getId());
         String token = JwtUtil.createJWT(
                 jwtProperties.getAdminSecretKey(),
                 jwtProperties.getAdminTtl(),
                 claims);
-
+        // 构建员工登录结果
         EmployeeLoginVO employeeLoginVO = EmployeeLoginVO.builder()
                 .id(employee.getId())
                 .userName(employee.getUsername())

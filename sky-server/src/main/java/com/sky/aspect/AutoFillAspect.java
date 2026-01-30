@@ -22,20 +22,20 @@ import com.sky.enumeration.OperationType;
  */
 @Aspect // 切面
 @Component // 组件
-@Slf4j
+@Slf4j // 日志
 public class AutoFillAspect {
 
     /**
-     * 自动填充切点
+     * 自动填充切点，切入点：对那些类那些方法进行拦截（两个条件）
      */
     @Pointcut("execution(* com.sky.mapper.*.*(..)) && @annotation(com.sky.annotation.AutoFill)")
     public void autoFillPointCut() {
     }
 
     /**
-     * 自动填充 前置通知
+     * 自动填充 前置通知 进行公共字段的赋值
      * 
-     * @param joinPoint 切点
+     * @param joinPoint
      */
     @Before("autoFillPointCut()")
     public void autoFill(JoinPoint joinPoint) {
