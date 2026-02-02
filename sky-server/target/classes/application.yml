@@ -10,12 +10,12 @@ spring:
     allow-circular-references: true
   datasource:
 #    driver-class-name: com.mysql.cj.jdbc.Driver # 驱动名称
-#    url: jdbc:mysql://81.70.189.15/test_sky
-#    username: test_sky
-#    password: 64646464
-    url: jdbc:mysql://localhost:3306/Test_sky
-    username: root
+    url: jdbc:mysql://81.70.189.15/test_sky
+    username: test_sky
     password: 64646464
+#    url: jdbc:mysql://localhost:3306/Test_sky
+#    username: root
+#    password: 64646464
 
     type: com.alibaba.druid.pool.DruidDataSource
   data:

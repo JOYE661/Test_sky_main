@@ -57,7 +57,7 @@ public class ReportServiceImpl implements ReportService {
 
         List<LocalDate> dates = new ArrayList<>();
         dates.add(begin);
-        while (begin.equals(end)) {
+        while (!begin.equals(end)) {
             begin = begin.plusDays(1);
             dates.add(begin);
         }
