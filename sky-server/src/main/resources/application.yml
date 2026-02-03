@@ -9,20 +9,25 @@ spring:
   main:
     allow-circular-references: true
   datasource:
-#    driver-class-name: com.mysql.cj.jdbc.Driver # 驱动名称
-#    url: jdbc:mysql://81.70.189.15/test_sky
-#    username: test_sky
-#    password: 64646464
-    url: jdbc:mysql://localhost:3306/Test_sky
-    username: root
+    driver-class-name: com.mysql.cj.jdbc.Driver # 驱动名称
+    url: jdbc:mysql://81.70.189.15/test_sky
+    username: test_sky
     password: 64646464
+#    url: jdbc:mysql://localhost:3306/Test_sky
+#    username: root
+#    password: 64646464
 
     type: com.alibaba.druid.pool.DruidDataSource
   data:
     redis:
-      host: 127.0.0.1
+#      host: 127.0.0.1
+#      port: 6379
+#      password: 123456
+#      timeout: 3000ms
+
+      host: localhost
       port: 6379
-      password: 123456
+      password:
       timeout: 3000ms
 
 # knife4j配置
